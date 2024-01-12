@@ -1,3 +1,3 @@
-module github.com/Gehnmart/MyProject
+module MyProject/EasyMessage
 
 go 1.21.5
