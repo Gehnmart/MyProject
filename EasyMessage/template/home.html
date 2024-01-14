@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>Your name is: <span id="name"></span></p>
+    <p>Your ID is: <span id="id"></span></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var nameElement = document.getElementById("name");
+            var idElement = document.getElementById("id");
+
+            // Assume you have retrieved the name and id values from the server
+            var name = "John Doe";
+            var id = 12345;
+
+            nameElement.textContent = name;
+            idElement.textContent = id;
+        });
+    </script>
+</body>
+</html>
