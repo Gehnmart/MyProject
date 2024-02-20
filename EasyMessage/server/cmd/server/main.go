@@ -1,13 +1,14 @@
 package main
 
 import (
-	data "MyProject/EasyMessage/server/internal"
+	"MyProject/EasyMessage/server/internal/model"
+	"MyProject/EasyMessage/server/internal/user"
+	"MyProject/EasyMessage/server/internal/ws"
+	"MyProject/EasyMessage/server/router"
 	"context"
 	"database/sql"
 	"flag"
-	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"time"
 
@@ -17,9 +18,10 @@ import (
 const verson = "1.0.0"
 
 type config struct {
-	port int
-	env  string
-	db   struct {
+	addres string
+	port   string
+	env    string
+	db     struct {
 		dsn             string
 		maxOpenConns    int
 		maxIdleConns    int
@@ -28,15 +30,17 @@ type config struct {
 }
 
 type application struct {
-	config config
-	logger *log.Logger
-	models data.Models
+	config   config
+	logger   *log.Logger
+	models   *model.Models
+	handlers *user.Handler
 }
 
 func main() {
 	var cfg config
 
-	flag.IntVar(&cfg.port, "port", 4000, "API server port")
+	flag.StringVar(&cfg.addres, "address", "localhost", "API server address")
+	flag.StringVar(&cfg.port, "port", "4000", "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Enviroment (development|staging|production)")
 
 	flag.StringVar(&cfg.db.dsn, "db-dns", os.Getenv("EASYMESSAGE_DB_DSN"), "PostgreSQL DSN")
@@ -51,27 +55,25 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	logger.Printf("Opened DB %q", cfg.db.dsn)
-
 	defer db.Close()
 
+	userModel := model.NewModel(db)
+	userHandler := user.NewHandler(&userModel.Users)
+
 	app := application{
-		config: cfg,
-		logger: logger,
-		models: data.NewModel(db),
+		config:   cfg,
+		logger:   logger,
+		models:   userModel,
+		handlers: userHandler,
 	}
 
-	srv := &http.Server{
-		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      app.routes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
-	}
+	hub := ws.NewHub()
+	wsHandler := ws.NewHandler(hub)
+	go hub.Run()
 
-	logger.Printf("Starting %s server on %s", cfg.env, srv.Addr)
-	err = srv.ListenAndServe()
-	logger.Fatal(err)
+	router.InitRouter(app.handlers, wsHandler)
+	router.Start(cfg.addres + ":" + cfg.port)
+
 }
 
 func openDB(cfg config) (*sql.DB, error) {

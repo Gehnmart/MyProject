@@ -3,6 +3,5 @@ CREATE TABLE IF NOT EXISTS users (
     name text NOT NULL,
     short_name text NOT NULL,
     email text NOT NULL UNIQUE,
-    password text NOT NULL,
-    rooms integer[]
+    password text NOT NULL
 );
