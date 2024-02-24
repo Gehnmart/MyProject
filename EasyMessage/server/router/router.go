@@ -1,27 +1,39 @@
 package router
 
 import (
-	"MyProject/EasyMessage/server/internal/user"
-	"MyProject/EasyMessage/server/internal/ws"
+	"server/internal/model/message"
+	"server/internal/model/room"
+	"server/internal/model/user"
 
 	"github.com/gin-gonic/gin"
 )
 
-var r *gin.Engine
+func InitRouter(user *user.Handler, room *room.Handler, message *message.Handler) *gin.Engine {
+	router := gin.Default()
 
-func InitRouter(user_handler *user.Handler, ws_handler *ws.Handler) {
-	r = gin.Default()
+	auth := router.Group("/auth")
+	{
+		auth.POST("/signup", user.CreateUser)
+		auth.POST("/login", user.LoginUser)
+	}
 
-	r.POST("/signup", user_handler.CreateUser)
-	r.POST("/login", user_handler.LoginUser)
-	r.GET("/logout", user_handler.LogoutUser)
+	api := router.Group("/api", user.IdentityUser)
+	{
+		rooms := api.Group("/room")
+		{
+			rooms.POST("", room.CreateRoom)
+			rooms.GET("/user", room.GetRoomByUserId)
 
-	r.POST("/ws/createRoom", ws_handler.CreateRoom)
-	r.GET("/ws/joinRoom/:roomId", ws_handler.JoinRoom)
-	r.GET("/ws/getRooms", ws_handler.GetRooms)
-	r.GET("/ws/getClients/:roomId", ws_handler.GetClients)
+			messages := rooms.Group("/:room_id/message", room.GetRoomById)
+			{
+				//messages.GET("", message.GetMessageByRoomId)
+				messages.POST("", message.CreateMessage)
+			}
+		}
+	}
+	return router
 }
 
-func Start(addres string) error {
-	return r.Run(addres)
+func Start(r *gin.Engine, address string) error {
+	return r.Run(address)
 }
