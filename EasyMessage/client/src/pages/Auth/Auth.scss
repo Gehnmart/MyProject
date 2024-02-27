@@ -1,0 +1,44 @@
+.auth{
+    font-family: ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .auth__top{
+        margin: 0 auto;
+        h2 {
+            white-space: nowrap;
+        }
+        padding-left: 30%;
+        text-align: center;
+    }
+
+    .block{
+        max-width: 430px;
+        width: 100%;
+    }
+
+    &__register-link{
+        text-align: center;
+        display: block;
+        letter-spacing: 0.1;
+        color: #ADADAD;
+    }
+    &__login-link{
+        text-align: center;
+        display: block;
+        letter-spacing: 0.1;
+        color: #ADADAD;
+    }
+
+    .button{
+        font-family: ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: absolute;
+        font-size: 14;
+        letter-spacing: 0.1;
+        width: 100%;
+    }
+}
