@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { formatDistanceToNow } from "date-fns";
-import { ru } from 'date-fns/locale'
+import Time from 'components/Time'
 import './Message.scss';
+import Avatar from 'components/Avatar';
 
 const Message = ({avatar, text, date, user, is_me}) => {
     const messageClass = is_me ? 'message message--me' : 'message';
@@ -10,14 +10,14 @@ const Message = ({avatar, text, date, user, is_me}) => {
     return (
         <div className={messageClass}>
             <div className="message__avatar">
-                <img src={avatar} alt={`avatar ${user.name}`} />
+                <Avatar user={user} into_dialog={true} />
             </div>
             <div className="message__content">
                 <div className="message__bubble">
                     <p className='message__text'>{text}</p>
                 </div>
                 <span className='message__date'>
-                    {formatDistanceToNow(new Date(date), { addSuffix: true, locale: ru })}
+                    <Time date={date}></Time>
                 </span>
             </div>
         </div>

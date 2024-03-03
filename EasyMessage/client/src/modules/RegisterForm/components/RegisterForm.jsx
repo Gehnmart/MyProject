@@ -27,7 +27,7 @@ const RegisterForm = props => {
                         <Form.Item
                             validateStatus={errors.username && touched.username ? "error" : "success"}
                             help={errors.username && touched.username && errors.username}
-                            hasFeedback
+                            hasFeedback = { touched.username ? true : false }
                         >
                             <Input
                                 size='large'
@@ -44,7 +44,7 @@ const RegisterForm = props => {
                         <Form.Item
                             validateStatus={errors.email && touched.email ? "error" : "success"}
                             help={errors.email && touched.email && errors.email}
-                            hasFeedback
+                            hasFeedback = { touched.email ? true : false }
                         >
                             <Input
                                 size='large'
@@ -61,7 +61,7 @@ const RegisterForm = props => {
                         <Form.Item
                             validateStatus={errors.password && touched.password ? "error" : "success"}
                             help={errors.password && touched.password && errors.password}
-                            hasFeedback
+                            hasFeedback = { touched.password ? true : false }
                         >
                             <Input
                                 size='large'
@@ -77,7 +77,7 @@ const RegisterForm = props => {
                         <Form.Item
                             validateStatus={errors.repeatPassword && touched.repeatPassword ? "error" : "success"}
                             help={errors.repeatPassword && touched.repeatPassword && errors.repeatPassword}
-                            hasFeedback
+                            hasFeedback = { touched.repeatPassword ? true : false }
                         >
                             <Input
                                 size='large'

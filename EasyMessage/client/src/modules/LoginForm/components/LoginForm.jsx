@@ -27,7 +27,7 @@ const LoginForm = props => {
                         <Form.Item
                             validateStatus={errors.email && touched.email ? "error" : "success"}
                             help={errors.email && touched.email && errors.email}
-                            hasFeedback
+                            hasFeedback = {touched.email ? true : false}
                         >
                             <Input
                                 size='large'
@@ -44,7 +44,7 @@ const LoginForm = props => {
                         <Form.Item
                             validateStatus={errors.password && touched.password ? "error" : "success"}
                             help={errors.password && touched.password && errors.password}
-                            hasFeedback
+                            hasFeedback = {touched.password ? true : false}
                         >
                             <Input
                                 size='large'

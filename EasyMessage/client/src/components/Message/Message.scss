@@ -19,8 +19,8 @@
     &__bubble {
         max-width: 300px;
         background: #3674ff;
-        border-radius: 12px 12px 12px 0px;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        border-radius: 12px 12px 12px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         padding-right: 6px;
         padding-left: 6px;
         padding-top: 6px;
@@ -35,8 +35,8 @@
         font-size: 14px;
         color: white;
         word-break: break-word;
-        border-radius: 12px 15px 12px 0px;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.02);
+        border-radius: 12px 15px 12px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
     }
 
     &--me { /* Стили для сообщения, отправленного мной */
@@ -45,11 +45,11 @@
     }
 
     &--me .message__text {
-        border-radius: 15px 12px 0px 12px;
+        border-radius: 15px 12px 0 12px;
     }
 
     &--me .message__bubble {
-        border-radius: 12px 12px 0px 12px;
+        border-radius: 12px 12px 0 12px;
         background: #4caf50; /* Цвет фона для сообщения, отправленного мной */
     }
 
@@ -58,13 +58,11 @@
         margin-left: 4px; /* Добавляем отступ слева */
     }
 
-    &--me .message__avatar {
-        img {
+    &--me .message__avatar-img {
             width: 33px;
             height: 33px;
             border-radius: 50px;
             margin-left: 13px;
             margin-right: 0;
-        }
     }
 }
