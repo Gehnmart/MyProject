@@ -9,7 +9,7 @@ import name_to_rgb from "../../helpers/name_to_rgb";
 const { Search } = Input;
 
 const Home = () => {
-    const [currentDialog, setCurrentDialog] = React.useState(0);
+    const [currentDialog, setCurrentDialog] = React.useState('');
     const [search, setSearch] = React.useState('');
     // Функция для фильтрации диалогов по имени пользователя
     const handleSearch = (items) => {
@@ -35,7 +35,6 @@ const Home = () => {
                         <FormOutlined />
                     </div>
                     <div className="chat__sidebar-search">
-                        {/* Передаем функцию handleSearch в компонент Search */}
                         <Input value={search} onChange={e => setSearch(e.target.value)} />
                     </div>
                     <div className="chat__sidebar-dialogs">
@@ -49,7 +48,9 @@ const Home = () => {
                 </div>
                 <div className="chat__dialog">
                     <div className="chat__dialog-header">
-                        <b className='chat__dialog-header-name'></b>
+                        <b className='chat__dialog-header-name'>
+                            {currentDialog}
+                        </b>
                     </div>
                     <div className="chat__dialog-messages">
                         <Message

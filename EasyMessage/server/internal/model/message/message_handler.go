@@ -30,14 +30,14 @@ func (h *Handler) CreateMessage(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 	}
 
-	var message_req CreateMessageReq
-	user_id, _ := c.Get("userId")
+	var messageReq CreateMessageReq
+	userId, _ := c.Get("userId")
 	room_id, _ := strconv.Atoi(c.Param("room_id"))
-	message_req.UserId = user_id.(int)
-	message_req.RoomId = room_id
-	message_req.Content = content.Content
+	messageReq.UserId = userId.(int)
+	messageReq.RoomId = room_id
+	messageReq.Content = content.Content
 
-	message_res, err := h.model.CreateMessage(c, message_req)
+	message_res, err := h.model.CreateMessage(c, messageReq)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 	}
